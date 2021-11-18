@@ -86,7 +86,7 @@ class NextR<Req, Res> {
       if (index >= handlers.length) return;
 
       const wHandler = wrap(handlers[index]);
-      wHandler(run, index + 1).catch((err) => run(null, err));
+      wHandler(run, index + 1).catch((err) => run(handlers.length, err));
     };
 
     return async () => run(0);
@@ -116,11 +116,19 @@ class NextR<Req, Res> {
       return this.onNoMatch("Not match", this.myReq, this.myRes);
   }
 
-  handler(req: any, res: any) {
-    this.myReq = req;
-    this.myRes = res;
-    this.build();
-    this.exec();
+  handler() {
+    return (req: any, res: any) => {
+      this.myReq = req;
+      this.myRes = res;
+      this.build();
+      this.exec();
+    };
+  }
+
+  wrapE(exMiddleware: any, ...options: any[]) {
+    return (req: Req, res: Res, next: any) => {
+      exMiddleware(...options)(req, res, next);
+    };
   }
 }
 
