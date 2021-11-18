@@ -1,6 +1,6 @@
 {
   "name": "next-ec",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./build/nextR.js",
   "types": "./build/nextR.d.ts",
   "files": [
