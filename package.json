@@ -1,0 +1,38 @@
+{
+  "name": "next-ec",
+  "version": "1.0.0",
+  "main": "./build/nextR.js",
+  "types": "./build/nextR.d.ts",
+  "files": [
+    "build/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quocdaitinls/next-ec"
+  },
+  "homepage": "https://github.com/quocdaitinls/next-ec",
+  "license": "ISC",
+  "scripts": {
+    "clean": "del-cli ./build/*",
+    "build": "npm run clean && tsc",
+    "test": "jest --watchAll --no-cache",
+    "pub": "git add . && git commit -m \"Updates\" && npm version patch && npm run build && npm publish"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.7",
+    "@types/supertest": "^2.0.11",
+    "del-cli": "^4.0.1",
+    "jest": "^27.3.1",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.4.4"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "description": ""
+}
