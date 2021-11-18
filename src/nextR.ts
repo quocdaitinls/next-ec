@@ -1,5 +1,3 @@
-import {IncomingMessage, ServerResponse} from "http";
-
 export type ErrorHandler<Req, Res> = (err: any, req: Req, res: Res) => void;
 
 export type Options<Req, Res> = {
