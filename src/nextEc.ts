@@ -106,22 +106,25 @@ class NextEc<Req, Res> {
     }
   }
 
-  exec() {
+  exec(resolve: any) {
     const {method} = this.myReq;
     if (!this.result?.[method])
       throw new Error(`request should have valid "method" property`);
     const {matched, handler} = this.result[method];
-    handler().then();
+    handler();
     if (!matched && this.onNoMatch)
-      return this.onNoMatch("Not match", this.myReq, this.myRes);
+      this.onNoMatch("Not match", this.myReq, this.myRes);
+    return resolve();
   }
 
   handler() {
     return (req: any, res: any) => {
-      this.myReq = req;
-      this.myRes = res;
-      this.build();
-      this.exec();
+      return new Promise((resolve: any, reject: any) => {
+        this.myReq = req;
+        this.myRes = res;
+        this.build();
+        this.exec(resolve);
+      });
     };
   }
 
