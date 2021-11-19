@@ -1,8 +1,8 @@
 {
   "name": "next-ec",
   "version": "1.0.5",
-  "main": "./build/nextR.js",
-  "types": "./build/nextR.d.ts",
+  "main": "./build/nextEc.js",
+  "types": "./build/nextEc.d.ts",
   "files": [
     "build/**/*"
   ],
