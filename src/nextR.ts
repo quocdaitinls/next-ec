@@ -17,7 +17,7 @@ export type WrapHandler = (next: any, index: number) => Promise<any>;
 
 export type Method<Req, Res> = (...fns: Handler<Req, Res>[]) => void;
 
-class NextR<Req, Res> {
+class NextEc<Req, Res> {
   myReq: any;
   myRes: any;
   allStack: Handler<Req, Res>[] = [];
@@ -132,4 +132,4 @@ class NextR<Req, Res> {
   }
 }
 
-export default NextR;
+export default NextEc;
