@@ -2,7 +2,7 @@ export type ErrorHandler<Req, Res> = (err: any, req: Req, res: Res) => void;
 
 export type Options<Req, Res> = {
   onError?: ErrorHandler<Req, Res>;
-  onNoMatch?: ErrorHandler<Req, Res>;
+  // onNoMatch?: ErrorHandler<Req, Res>;
 };
 
 export type NextHandler<Req, Res> = Handler<Req, Res> | ErrorHandler<Req, Res>;
@@ -46,9 +46,9 @@ class NextEc<Req, Res> {
 
   constructor(options?: Options<Req, Res>) {
     if (options) {
-      const {onError, onNoMatch} = options;
+      const {onError} = options;
       if (onError) this.onError = onError;
-      if (onNoMatch) this.onNoMatch = onNoMatch;
+      // if (onNoMatch) this.onNoMatch = onNoMatch;
     }
   }
 
@@ -108,13 +108,11 @@ class NextEc<Req, Res> {
 
   exec(resolve: any) {
     const {method} = this.myReq;
-    if (!this.result?.[method])
-      throw new Error(`request should have valid "method" property`);
-    const {matched, handler} = this.result[method];
-    handler();
-    if (!matched && this.onNoMatch)
-      this.onNoMatch("Not match", this.myReq, this.myRes);
-    return resolve();
+    const {handler} = this.result[method];
+    handler().then(() => resolve());
+    // if (!matched && this.onNoMatch)
+    //   this.onNoMatch("Not match", this.myReq, this.myRes);
+    // return resolve();
   }
 
   handler() {
