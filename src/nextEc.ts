@@ -106,24 +106,24 @@ class NextEc<Req, Res> {
     }
   }
 
-  exec(resolve: any) {
+  exec = async () => {
     const {method} = this.myReq;
     const {handler} = this.result[method];
-    handler().then(() => resolve());
+    await handler();
     // if (!matched && this.onNoMatch)
     //   this.onNoMatch("Not match", this.myReq, this.myRes);
     // return resolve();
-  }
+  };
 
   handler() {
-    return async (req: any, res: any) => {
-      return new Promise((resolve: any, reject: any) => {
+    return async (req: any, res: any) =>
+      new Promise(async (resolve: any, reject: any) => {
         this.myReq = req;
         this.myRes = res;
         this.build();
-        this.exec(resolve);
+        await this.exec();
+        return resolve();
       });
-    };
   }
 
   wrapE(exMiddleware: any, ...options: any[]) {
