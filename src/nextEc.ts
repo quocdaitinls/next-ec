@@ -13,8 +13,6 @@ export type Handler<Req, Res> = (
   next?: NextHandler<Req, Res>
 ) => any | Promise<any>;
 
-export type WrapHandler = (next: any, index: number) => Promise<any>;
-
 export type Method<Req, Res> = (...fns: Handler<Req, Res>[]) => void;
 
 class NextEc<Req, Res> {
@@ -74,12 +72,8 @@ class NextEc<Req, Res> {
 
   compose(...handlers: Handler<Req, Res>[]) {
     const wrap =
-      (handler: Handler<Req, Res>): WrapHandler =>
-      async (next: any, index: number) =>
-        new Promise(async (resolve: any) => {
-          await handler(this.myReq, this.myRes, next.bind(null, index));
-          return resolve();
-        });
+      (handler: Handler<Req, Res>) => async (next: any, index: number) =>
+        handler(this.myReq, this.myRes, next.bind(null, index));
 
     const run = (index: number, err: any = undefined) => {
       if (err) {
