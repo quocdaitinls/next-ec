@@ -116,7 +116,7 @@ class NextEc<Req, Res> {
   }
 
   handler() {
-    return (req: any, res: any) => {
+    return async (req: any, res: any) => {
       return new Promise((resolve: any, reject: any) => {
         this.myReq = req;
         this.myRes = res;
