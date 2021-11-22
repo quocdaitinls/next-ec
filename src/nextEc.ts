@@ -76,7 +76,10 @@ class NextEc<Req, Res> {
     const wrap =
       (handler: Handler<Req, Res>): WrapHandler =>
       async (next: any, index: number) =>
-        handler(this.myReq, this.myRes, next.bind(null, index));
+        new Promise(async (resolve: any) => {
+          await handler(this.myReq, this.myRes, next.bind(null, index));
+          return resolve();
+        });
 
     const run = (index: number, err: any = undefined) => {
       if (err) {
@@ -116,14 +119,6 @@ class NextEc<Req, Res> {
   };
 
   handler() {
-    // return async (req: any, res: any) =>
-    //   new Promise(async (resolve: any, reject: any) => {
-    //     this.myReq = req;
-    //     this.myRes = res;
-    //     this.build();
-    //     await this.exec();
-    //     return resolve();
-    //   });
     return async (req: any, res: any) => {
       this.myReq = req;
       this.myRes = res;
